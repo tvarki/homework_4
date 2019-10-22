@@ -2,12 +2,18 @@ import UIKit
 
 struct AnyStack {
     
-    var anyStack : [Any]
+    var anyStack : [Any?]
+
     init(){
         anyStack = []
     }
-    
-    init(anyArray : [Any]){
+
+    init(anyArray : [Any?]){
+        //        guard anyArray != nil else {
+        //            print("Cant initialize by nil array")
+        //            return
+        //        }
+        print("Initialize with \(anyArray)")
         anyStack = anyArray
     }
     
@@ -17,7 +23,13 @@ struct AnyStack {
     }
     
     
-    mutating func addElement(any : Any){
+    mutating func addElement(any : Any?){
+        //        guard any != nil else {
+        //            print("Cant add nil to array")
+        //            return
+        //        }
+        
+        print(" +Add item \(String(describing: any))")
         anyStack.append(any)
     }
     
@@ -27,11 +39,13 @@ struct AnyStack {
             print("pStack is empty")
             return
         }
+        print(" -Remove item \(String(describing: anyStack[anyStack.endIndex-1]))")
         anyStack.remove(at:anyStack.endIndex-1)
     }
     
     
-    func getAllCOntent()->[Any]{
+    func getAllCOntent()->[Any?]{
+        print("getAllCOntent")
         return anyStack
     }
     
@@ -45,26 +59,52 @@ struct AnyStack {
             print( "error - pStack is empty")
             return
         }
-        print("------------------------")
+        print("-----------printAll-------------")
         for element in anyStack{
-            print("\(element)")
+            print("\(String(describing: element))")
         }
     }
 }
 
-var anyArray : [Any] = []
 
-anyArray.append("12333")
-anyArray.append("123")
-anyArray.append(22)
-anyArray.append("ll")
-anyArray.append(123.22)
-anyArray.append(123.22)
-anyArray.append(123.22)
-anyArray.append([1,2,3,4,5])
+var anyArray : [Any?] = []
+ anyArray.append("12333")
+ anyArray.append("123")
+ anyArray.append(22)
+ anyArray.append("ll")
+ anyArray.append(123.22)
+ anyArray.append(123.22)
+ anyArray.append(123.22)
+ anyArray.append([1,2,3,4,5])
+ anyArray.append(nil)
 
 var anyStack = AnyStack(anyArray: anyArray)
+
+
+//var anyStack = AnyStack()
+
+
 anyStack.addElement(any: "1221")
+
+
+struct tmp {
+    var test: String
+    var testInt: Int
+    init(test:String, int:Int){
+        self.test = test
+        self.testInt = int
+    }
+}
+var tt = tmp(test:"qwe",int:1)
+
+
+let tttmp : Int? = nil
+
+
+
+anyStack.addElement(any: tt)
+
+anyStack.addElement(any: tttmp)
 
 
 anyStack.printAll()
@@ -88,12 +128,12 @@ anyStack.printAll()
 print("----------------------")
 func run(){
     guard let element  = anyStack.getElement() else{
-        print("element is nil")
+        print("nil")
         return
     }
-    
     print("\(element)")
 }
 run()
 
-
+anyStack.remElement()
+run()
