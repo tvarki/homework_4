@@ -1,13 +1,108 @@
 import UIKit
 
+
+
+protocol QueueProtocol {
+    associatedtype T
+    var count : Int {get}
+    func contains(_ value: T) -> Bool
+}
+
+struct GenericQueue<Element: Equatable> : QueueProtocol {
+    
+    typealias T = Element
+    
+    var items = [Element]()
+    
+    mutating func add(_ item: Element) {
+        items.append(item)
+    }
+    
+    mutating func removeFirst() -> Element? {
+        guard items.count > 0 else { return nil }
+        return items.removeFirst()
+    }
+    
+    var count: Int {
+        return items.count
+    }
+}
+
+
+extension GenericQueue{
+     func contains(_ value: Element) -> Bool {
+        for item in items {
+            if value == item {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func getFirst()->Element?{
+        guard items.count > 0 else { return nil }
+        return items[0]
+        
+    }
+}
+
+
+extension GenericQueue where Element : Numeric{
+    func sumOfFirstAndLast() -> Element? {
+        guard items.count > 0 else {return nil}
+        return items[0] + items[items.count-1]
+    }
+}
+
+
+
+
+
+
+
+var  tmpQueue  = GenericQueue<Int>()
+
+
+tmpQueue.add(1)
+tmpQueue.sumOfFirstAndLast()
+
+tmpQueue.getFirst()
+
+tmpQueue.add(2)
+
+tmpQueue.removeFirst()
+tmpQueue.getFirst()
+
+tmpQueue.add(3)
+
+
+tmpQueue.contains(2)
+
+
+tmpQueue.removeFirst()
+tmpQueue.add(4)
+tmpQueue.add(5)
+
+tmpQueue.sumOfFirstAndLast()
+
+
+
+var  tmpStringQueue  = GenericQueue<String>()
+tmpStringQueue.add("1234")
+tmpStringQueue.add("qwerty")
+tmpStringQueue.add("asdfg")
+
+
+
+//----------------------------------------------------
+// все что дальше - я делал до лекции по дженерикам =(
+
 struct AnyStack {
     
     var anyStack : [Any?]
-
-    init(){
-        anyStack = []
-    }
-
+    
+    
+    
     init(anyArray : [Any?]){
         //        guard anyArray != nil else {
         //            print("Cant initialize by nil array")
@@ -68,18 +163,25 @@ struct AnyStack {
 
 
 var anyArray : [Any?] = []
- anyArray.append("12333")
- anyArray.append("123")
- anyArray.append(22)
- anyArray.append("ll")
- anyArray.append(123.22)
- anyArray.append(123.22)
- anyArray.append(123.22)
- anyArray.append([1,2,3,4,5])
- anyArray.append(nil)
+anyArray.append("12333")
+anyArray.append("123")
+anyArray.append(22)
+anyArray.append("ll")
+anyArray.append(123.22)
+anyArray.append(123.22)
+anyArray.append(123.22)
+anyArray.append([1,2,3,4,5])
+anyArray.append(nil)
 
 var anyStack = AnyStack(anyArray: anyArray)
 
+
+
+extension AnyStack{
+    init(){
+        anyStack = []
+    }
+}
 
 //var anyStack = AnyStack()
 
@@ -99,8 +201,6 @@ var tt = tmp(test:"qwe",int:1)
 
 
 let tttmp : Int? = nil
-
-
 
 anyStack.addElement(any: tt)
 
