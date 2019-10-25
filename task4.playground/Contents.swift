@@ -5,10 +5,11 @@ import UIKit
 protocol QueueProtocol {
     associatedtype T
     var count : Int {get}
-    func contains(_ value: T) -> Bool
+    mutating func add(_ item: T)
+    mutating func removeFirst() -> T?
 }
 
-struct GenericQueue<Element: Equatable> : QueueProtocol {
+struct GenericQueue<Element> : QueueProtocol {
     
     typealias T = Element
     
@@ -29,7 +30,7 @@ struct GenericQueue<Element: Equatable> : QueueProtocol {
 }
 
 
-extension GenericQueue{
+extension GenericQueue where Element : Equatable{
      func contains(_ value: Element) -> Bool {
         for item in items {
             if value == item {
@@ -67,7 +68,6 @@ tmpQueue.add(1)
 tmpQueue.sumOfFirstAndLast()
 
 tmpQueue.getFirst()
-
 tmpQueue.add(2)
 
 tmpQueue.removeFirst()
@@ -84,6 +84,7 @@ tmpQueue.add(4)
 tmpQueue.add(5)
 
 tmpQueue.sumOfFirstAndLast()
+tmpQueue.count
 
 
 
